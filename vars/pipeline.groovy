@@ -1,25 +1,23 @@
-def call(body) {
+package com.example
 
-  pipeline {
-      agent any
+class Pipeline {
+    def script
+    def configurationFile
 
-    triggers {
-      githubPush()
+    Pipeline(script, configurationFile) {
+        this.script = script
+        this.configurationFile = configurationFile
     }
 
+    def execute() {
+//    ===================== Your Code Starts Here =====================
+//    Note : use "script" to access objects from jenkins pipeline run (WorkflowScript passed from Jenkinsfile)
+//           for example: script.node(), script.stage() etc
 
-    stages {
-      stage("Pipeline") {
-          stage("build") {
-            stages {
-              stage('build') {
-                steps {
-                    sh "echo hello world, Lint image"
-                }
-              }
-            }
-          }
-        }
+//    ===================== Parse configuration file ==================
+
+//    ===================== Run pipeline stages =======================
+
+//    ===================== End pipeline ==============================
     }
-  }
 }
