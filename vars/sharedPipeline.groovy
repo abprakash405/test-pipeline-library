@@ -19,6 +19,7 @@ def call(body) {
 			println yamlconfig.build
 			env.buildCommand = yamlconfig.build.buildCommand
 			env.buildProjectFolder = yamlconfig.build.projectFolder
+			env.all = ${yamlconfig}
                 	
 			
 	        }
@@ -26,6 +27,7 @@ def call(body) {
 	        	bat "echo 'building ${config.projectName} ...'"
 			println buildCommand
 			bat "${buildCommand} -f ${buildProjectFolder}/pom.xml"
+			println all
 	        }
 	        stage ('Tests') {
 		        parallel 'static': {
