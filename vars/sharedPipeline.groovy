@@ -17,13 +17,13 @@ def call(body) {
 	        	checkout scm
 			def yamlconfig = readYaml file: "config.yml"
 			println yamlconfig.build
-			env.inputconfig = yamlconfig
+			env.inputconfig = yamlconfig.build
                 	
 			
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
-			println inputconfig.database
+			println inputconfig
 	        }
 	        stage ('Tests') {
 		        parallel 'static': {
