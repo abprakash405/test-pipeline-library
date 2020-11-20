@@ -1,4 +1,3 @@
-//import groovy.yaml.YamlSlurper
 import org.yaml.snakeyaml.Yaml
 
 
@@ -34,7 +33,7 @@ def call(body) {
 			
 	        }
 	        stage ('Database') {
-	        	bat "echo 'building ${config.projectName} ...'"
+	        	bat "echo 'Database action on project: ${config.projectName} ...'"
 			bat "${databaseCommand} -f ${databaseFolder}/pom.xml"
 			
 	        }
