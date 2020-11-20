@@ -1,24 +1,37 @@
 def call(body) {
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
 
-  pipeline {
-      agent any
+    node {
+	    // Clean workspace before doing anything
+	    deleteDir()
 
-    triggers {
-      githubPush()
+	    try {
+	        stage ('Clone') {
+	        	checkout scm
+	        }
+	        stage ('Build') {
+	        	sh "echo 'building ${config.projectName} ...'"
+	        }
+	        stage ('Tests') {
+		        parallel 'static': {
+		            sh "echo 'shell scripts to run static tests...'"
+		        },
+		        'unit': {
+		            sh "echo 'shell scripts to run unit tests...'"
+		        },
+		        'integration': {
+		            sh "echo 'shell scripts to run integration tests...'"
+		        }
+	        }
+	      	stage ('Deploy') {
+	            sh "echo 'deploying to server ${config.serverDomain}...'"
+	      	}
+	    } catch (err) {
+	        currentBuild.result = 'FAILED'
+	        throw err
+	    }
     }
-
-    stages {
-      stage("Pipeline") {
-          stage("build") {
-            stages {
-              stage('build') {
-                steps {
-                    sh "echo hello world, Lint image"
-                }
-              }
-            }
-          }
-        }
-    }
-  }
 }
