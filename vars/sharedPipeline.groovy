@@ -37,9 +37,8 @@ def call(body) {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
 		    bat "${deployCommand} -f ${buildProjectFolder}/pom.xml"
 	      	}
-		stage ('Tests') {
-		        parallel 
-			'performance': {
+		stage ('Test') {
+		        parallel 'performance': {
 		            bat "echo 'shell scripts to run performance tests...'"
 		        },
 		        'regression': {
@@ -49,10 +48,6 @@ def call(body) {
 		            bat "echo 'shell scripts to run integration tests...'"
 		        }
 	        }
-		stage ('test') {
-	            bat "echo 'deploying to server ${config.serverDomain}...'"
-		    bat "${deployCommand} -f ${buildProjectFolder}/pom.xml"
-	      	}
 	    } catch (err) {
 	        currentBuild.result = 'FAILED'
 	        throw err
