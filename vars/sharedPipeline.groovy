@@ -13,7 +13,7 @@ def call(body) {
 	    deleteDir()
 
 	    try {
-	        stage ('Clone') {
+	        stage ('Clone & Env') {
 	        	checkout scm
 			def yamlconfig = readYaml file: "config.yml"
 			env.buildProjectFolder = yamlconfig.build.projectFolder
