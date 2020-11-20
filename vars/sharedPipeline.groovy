@@ -21,6 +21,7 @@ def call(body) {
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
+			println yamlconfig.database
 	        }
 	        stage ('Tests') {
 		        parallel 'static': {
@@ -35,9 +36,9 @@ def call(body) {
 	        }
 	      	stage ('Deploy') {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
+		    println yamlconfig.deploy
 	      	}
 	    } catch (err) {
-		println ${yamlconfig.build}
 	        currentBuild.result = 'FAILED'
 	        throw err
 	    }
