@@ -1,10 +1,9 @@
-import groovy.yaml.YamlSlurper
+//import groovy.yaml.YamlSlurper
 import org.yaml.snakeyaml.Yaml
 
 
 def call(body) {
     def config = [:]
-    //def yaml = readYaml file: "config.yml"
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
@@ -16,6 +15,7 @@ def call(body) {
 	    try {
 	        stage ('Clone') {
 	        	checkout scm
+			def yaml = readYaml file: "config.yml"
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
