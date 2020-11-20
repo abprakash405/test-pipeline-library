@@ -15,7 +15,9 @@ def call(body) {
 	    try {
 	        stage ('Clone') {
 	        	checkout scm
-			def yaml = readYaml file: "config.yml"
+			def yamlconfig = readYaml file: "config.yml"
+			println yamlconfig.build
+			
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
@@ -35,6 +37,7 @@ def call(body) {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
 	      	}
 	    } catch (err) {
+		println ${yamlconfig.build}
 	        currentBuild.result = 'FAILED'
 	        throw err
 	    }
