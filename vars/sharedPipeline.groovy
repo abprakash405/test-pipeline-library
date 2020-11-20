@@ -1,5 +1,6 @@
 //import groovy.yaml.YamlSlurper
 import org.yaml.snakeyaml.Yaml
+import hudson.model.*
 
 def call(body) {
     def config = [:]
