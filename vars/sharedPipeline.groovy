@@ -24,6 +24,7 @@ def call(body) {
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
 			println buildCommand
+			bat buildCommand
 	        }
 	        stage ('Tests') {
 		        parallel 'static': {
