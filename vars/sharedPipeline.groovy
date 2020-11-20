@@ -17,11 +17,14 @@ def call(body) {
 	        	checkout scm
 			def yamlconfig = readYaml file: "config.yml"
 			println yamlconfig.build
+			environment {
+				inputconfig = "${yamlconfig}"
+                	}
 			
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
-			println yamlconfig.database
+			println inputconfig.database
 	        }
 	        stage ('Tests') {
 		        parallel 'static': {
@@ -36,7 +39,7 @@ def call(body) {
 	        }
 	      	stage ('Deploy') {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
-		    println yamlconfig.deploy
+		    println inputconfig.deploy
 	      	}
 	    } catch (err) {
 	        currentBuild.result = 'FAILED'
