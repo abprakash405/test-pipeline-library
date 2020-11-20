@@ -19,7 +19,7 @@ def call(body) {
 			println yamlconfig.build
 			env.buildCommand = yamlconfig.build.buildCommand
 			env.buildProjectFolder = yamlconfig.build.projectFolder
-			env.all = ${yamlconfig}
+			env.all = yamlconfig
                 	
 			
 	        }
