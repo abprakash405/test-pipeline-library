@@ -18,13 +18,14 @@ def call(body) {
 			def yamlconfig = readYaml file: "config.yml"
 			println yamlconfig.build
 			env.buildCommand = yamlconfig.build.buildCommand
+			env.buildProjectFolder = yamlconfig.build.projectFolder
                 	
 			
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
 			println buildCommand
-			bat buildCommand
+			bat buildCommand buildProjectFolder/pom.xml
 	        }
 	        stage ('Tests') {
 		        parallel 'static': {
