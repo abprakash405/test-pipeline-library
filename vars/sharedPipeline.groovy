@@ -51,7 +51,7 @@ def call(body) {
 		        'regression': {
 		            bat "echo 'shell scripts to run regression tests...'"
 		            dir(testFolder) {
-			    		bat "${rtest}"
+			    		sh "${rtest}"
 				}
 		        },
 		        'integration': {
