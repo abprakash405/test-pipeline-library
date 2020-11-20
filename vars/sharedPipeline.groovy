@@ -44,7 +44,9 @@ def call(body) {
 		stage ('Test') {
 		        parallel 'performance': {
 		            bat "echo 'shell scripts to run performance tests...'"
-			    bat "${ptest} -f ${testFolder}/pom.xml"
+				dir(testFolder) {
+			    		bat "${ptest}"
+				}
 		        },
 		        'regression': {
 		            bat "echo 'shell scripts to run regression tests...'"
