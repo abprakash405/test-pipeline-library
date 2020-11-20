@@ -1,5 +1,6 @@
-import groovy.yaml.YamlSlurper
+//import groovy.yaml.YamlSlurper
 import org.yaml.snakeyaml.Yaml
+
 def call(body) {
     def config = [:]
     def yaml = readYaml file: "config.yml"
