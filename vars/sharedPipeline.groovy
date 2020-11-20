@@ -16,38 +16,30 @@ def call(body) {
 	        stage ('Clone') {
 	        	checkout scm
 			def yamlconfig = readYaml file: "config.yml"
-			println yamlconfig.build
-			env.buildCommand = yamlconfig.build.buildCommand
 			env.buildProjectFolder = yamlconfig.build.projectFolder
-			env.all = yamlconfig
-			println all
-			println all.build
-			
-                	
+			env.buildCommand = yamlconfig.build.buildCommand
+			env.databaseFolder = yamlconfig.database.databaseFolder
+			env.databaseCommand = yamlconfig.database.databaseCommand
+			env.deployCommand = yamlconfig.deploy.deployCommand
 			
 	        }
 	        stage ('Build') {
 	        	bat "echo 'building ${config.projectName} ...'"
-			println buildCommand
-			println all
-			println all.build
-			bat "${all.build.buildCommand} -f ${all.build.projectFolder}/pom.xml"
+			bat "${buildCommand} -f ${buildProjectFolder}/pom.xml"
 			
 	        }
-	        stage ('Tests') {
-		        parallel 'static': {
-		            bat "echo 'shell scripts to run static tests...'"
-		        },
-		        'unit': {
-		            bat "echo 'shell scripts to run unit tests...'"
-		        },
-		        'integration': {
-		            bat "echo 'shell scripts to run integration tests...'"
-		        }
+	        stage ('Database') {
+	        	bat "echo 'building ${config.projectName} ...'"
+			bat "${databaseCommand} -f ${databaseFolder}/pom.xml"
+			
 	        }
 	      	stage ('Deploy') {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
-		    println inputconfig.deploy
+		    bat "${deployCommand} -f ${buildProjectFolder}/pom.xml"
+	      	}
+		stage ('test') {
+	            bat "echo 'deploying to server ${config.serverDomain}...'"
+		    bat "${deployCommand} -f ${buildProjectFolder}/pom.xml"
 	      	}
 	    } catch (err) {
 	        currentBuild.result = 'FAILED'
