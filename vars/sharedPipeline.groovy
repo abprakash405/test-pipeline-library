@@ -37,6 +37,18 @@ def call(body) {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
 		    bat "${deployCommand} -f ${buildProjectFolder}/pom.xml"
 	      	}
+		stage ('Tests') {
+		        parallel 
+			'performance': {
+		            bat "echo 'shell scripts to run performance tests...'"
+		        },
+		        'regression': {
+		            bat "echo 'shell scripts to run regression tests...'"
+		        },
+		        'integration': {
+		            bat "echo 'shell scripts to run integration tests...'"
+		        }
+	        }
 		stage ('test') {
 	            bat "echo 'deploying to server ${config.serverDomain}...'"
 		    bat "${deployCommand} -f ${buildProjectFolder}/pom.xml"
