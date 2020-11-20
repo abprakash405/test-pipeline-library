@@ -21,6 +21,10 @@ def call(body) {
 			env.databaseFolder = yamlconfig.database.databaseFolder
 			env.databaseCommand = yamlconfig.database.databaseCommand
 			env.deployCommand = yamlconfig.deploy.deployCommand
+			env.ptest = yamlconfig.test[0].testCommand
+			env.rtest = yamlconfig.test[1].testCommand
+			env.itest = yamlconfig.test[2].testCommand
+			env.testFolder = yamlconfig.test[0].testFolder
 			
 	        }
 	        stage ('Build') {
@@ -40,12 +44,15 @@ def call(body) {
 		stage ('Test') {
 		        parallel 'performance': {
 		            bat "echo 'shell scripts to run performance tests...'"
+			    bat "${ptest} -f ${testFolder}/pom.xml"
 		        },
 		        'regression': {
 		            bat "echo 'shell scripts to run regression tests...'"
+		            bat "${rtest} -f ${testFolder}/pom.xml"
 		        },
 		        'integration': {
 		            bat "echo 'shell scripts to run integration tests...'"
+			    bat "${itest} -f ${testFolder}/pom.xml"
 		        }
 	        }
 	    } catch (err) {
