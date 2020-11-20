@@ -25,6 +25,7 @@ def call(body) {
 			env.rtest = yamlconfig.test[1].testCommand
 			env.itest = yamlconfig.test[2].testCommand
 			env.testFolder = yamlconfig.test[0].testFolder
+			env.emailRecipients = yamlconfig.notifications.email.recipients
 			
 	        }
 	        stage ('Build') {
@@ -63,6 +64,12 @@ def call(body) {
 	        }
 	    } catch (err) {
 	        currentBuild.result = 'FAILED'
+		emailext (
+          		subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+          		body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+            		<p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+			to: emailRecipients
+        		)
 	        throw err
 	    }
     }
