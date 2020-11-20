@@ -17,9 +17,8 @@ def call(body) {
 	        	checkout scm
 			def yamlconfig = readYaml file: "config.yml"
 			println yamlconfig.build
-			environment {
-				inputconfig = "${yamlconfig}"
-                	}
+			env.inputconfig = yamlconfig
+                	
 			
 	        }
 	        stage ('Build') {
