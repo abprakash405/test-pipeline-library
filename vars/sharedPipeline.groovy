@@ -1,10 +1,10 @@
 //import groovy.yaml.YamlSlurper
 import org.yaml.snakeyaml.Yaml
-import hudson.model.*
+
 
 def call(body) {
     def config = [:]
-    def yaml = readYaml file: "config.yml"
+    //def yaml = readYaml file: "config.yml"
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
