@@ -27,7 +27,7 @@ def call(body) {
 	        	bat "echo 'building ${config.projectName} ...'"
 			println buildCommand
 			println all
-			bat "${buildCommand} -f ${buildProjectFolder}/pom.xml"
+			bat "${all.build.buildCommand} -f ${all.build.projectFolder}/pom.xml"
 			
 	        }
 	        stage ('Tests') {
