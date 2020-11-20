@@ -50,11 +50,15 @@ def call(body) {
 		        },
 		        'regression': {
 		            bat "echo 'shell scripts to run regression tests...'"
-		            bat "${rtest} -f ${testFolder}/pom.xml"
+		            dir(testFolder) {
+			    		bat "${rtest}"
+				}
 		        },
 		        'integration': {
 		            bat "echo 'shell scripts to run integration tests...'"
-			    bat "${itest} -f ${testFolder}/pom.xml"
+			    dir(testFolder) {
+			    		bat "${itest}"
+				}
 		        }
 	        }
 	    } catch (err) {
