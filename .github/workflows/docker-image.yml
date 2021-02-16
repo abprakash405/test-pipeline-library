@@ -24,9 +24,9 @@ jobs:
         # image name
         image: testingrepo
         # AWS Access Key ID
-        aws-access-key-id: AKIA4JKNYRTKHDGV7TH4
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         # AWS Secret Access Key
-        aws-secret-access-key: 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
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         # AWS Region
         aws-region: ap-south-1
         # AWS Account ID
